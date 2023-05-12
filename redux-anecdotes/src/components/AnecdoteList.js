@@ -26,7 +26,7 @@ const AnecdoteList = () => {
             {
                 anecdotes 
                 ?
-                anecdotes.sort((anecdote1, anecdote2) => anecdote2.votes - anecdote1.votes).map(anecdote => {
+                [...anecdotes].sort((anecdote1, anecdote2) => anecdote2.votes - anecdote1.votes).map(anecdote => {
                     return (
                         <Anecdote 
                             key={anecdote.id}
