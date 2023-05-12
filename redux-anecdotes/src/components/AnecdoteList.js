@@ -3,7 +3,13 @@ import { voteAnecdote } from '../reducers/anecdoteReducer'
 
 const AnecdoteList = () => {
     const anecdotes = useSelector((state) => {
-        return state.sort((anecdote1, anecdote2) => anecdote2.votes - anecdote1.votes)
+        if ( state.filter === '' ) {
+            return state.anecdotes.sort((anecdote1, anecdote2) => anecdote2.votes - anecdote1.votes)
+        } else {
+            return state.anecdotes.filter(anecdote => {
+                return anecdote.content.toLowerCase().includes(state.filter.toLowerCase())
+            }).sort((anecdote1, anecdote2) => anecdote2.votes - anecdote1.votes)
+        }
     })
     const dispatch = useDispatch()
     
@@ -21,7 +27,6 @@ const AnecdoteList = () => {
             </div>
             </div>
         )}
-        <h2>create new</h2>
        </div>
     )
 }
