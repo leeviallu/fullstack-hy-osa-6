@@ -29,10 +29,15 @@ const anecdoteReducer = (state = initialState, action) => {
           return {
             ...anecdote,
             votes: anecdote.votes + 1
-            }
+          }
       }
       return anecdote
     })
+    case 'ADD':
+      return [
+        ...state,
+        asObject(action.payload.content)
+      ]
     default:
       return state
   }
@@ -42,6 +47,19 @@ export const voteAnecdote = (id) => {
   return {
     type: 'VOTE',
     payload: id,
+  }
+}
+
+const generateId = () =>
+  Number((Math.random() * 1000000).toFixed(0))
+
+export const createAnecdote = (content) => {
+  return {
+    type: 'ADD',
+    payload: {
+      content,
+      id: generateId()
+    }
   }
 }
 
