@@ -3,17 +3,13 @@ import { filterChange } from '../reducers/filterReducer'
 
 const Filter = () => {
     const dispatch = useDispatch()
-
-    const handleChange = (event) => {
-        dispatch(filterChange(event.target.value))
-    }
     const style = {
         marginBottom: 10
     }
 
     return (
         <div style={style}>
-            <input onChange={handleChange} />
+            <input onChange={(event) => dispatch(filterChange(event.target.value))} />
         </div>
     )
 }
