@@ -24,7 +24,11 @@ const AnecdoteList = () => {
     const dispatch = useDispatch()
 
     const likeHandler = (anecdote) => {
-        dispatch(modifyAnecdote(anecdote))
+        const newObject = {
+            ...anecdote,
+            votes: anecdote.votes + 1,
+        }
+        dispatch(modifyAnecdote(newObject))
         dispatch(voteNotification(anecdote.content))
         setTimeout(function(){
             dispatch(clearNotification())
