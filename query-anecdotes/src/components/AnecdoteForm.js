@@ -22,7 +22,7 @@ const AnecdoteForm = () => {
         id: String((Math.random() * 1000000).toFixed(0)),
         votes: 0,
       }
-      dispatch({type: 'ADD'})
+      dispatch({type: 'NOTIFICATION', payload: `you added '${content}'`})
       newAnecdoteMutation.mutate(createAnecdote)
     }
 }

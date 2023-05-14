@@ -36,7 +36,7 @@ const App = () => {
       ...anecdote,
       votes: anecdote.votes + 1
     }
-    dispatch({type: 'VOTE'})
+    dispatch({type: 'NOTIFICATION', payload: `anecdote '${voteddAnecdote.content}' voted`})
     updateAnecdoteMutation.mutate(voteddAnecdote)
   }
 
