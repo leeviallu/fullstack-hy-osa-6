@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import axios from 'axios'
+import { getAnecdotes } from './requests'
 
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
@@ -9,10 +9,7 @@ const App = () => {
   const handleVote = (anecdote) => {
     console.log('vote')
   }
-  const getAnecdotes = async () => {
-    const result = await axios.get('http://localhost:3001/anecdotes')
-    return result.data
-  }
+
   const result = useQuery(
     'anecdotes', getAnecdotes, { retry: 1 }
   )
