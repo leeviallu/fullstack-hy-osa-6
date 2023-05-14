@@ -7,11 +7,20 @@ import Notification from './components/Notification'
 const App = () => {
   const queryClient = useQueryClient()
   const updateAnecdoteMutation = useMutation(updateAnecdote, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('anecdotes')
+    onSuccess: (updateAnecdote) => {
+      const anecdotes = queryClient.getQueryData('anecdotes')
+      queryClient.setQueryData('anecdotes', anecdotes.map(anecdote => {
+        if (anecdote.id === updateAnecdote.id) {
+          return updateAnecdote
+        }
+        return anecdote
+      }))
     }
   })
-  const result = useQuery('anecdotes', getAnecdotes, { retry: 1 })
+  const result = useQuery('anecdotes', getAnecdotes, { 
+    refetchOnWindowFocus: false,
+    retry: 1 
+  })
   if ( result.isLoading ) {
     return <div>loading data...</div>
   }
@@ -21,11 +30,11 @@ const App = () => {
   const anecdotes = result.data
 
   const handleVote = (anecdote) => {
-    const updatedAnecdote = {
+    const voteddAnecdote = {
       ...anecdote,
       votes: anecdote.votes + 1
     }
-    updateAnecdoteMutation.mutate(updatedAnecdote)
+    updateAnecdoteMutation.mutate(voteddAnecdote)
   }
 
   return (

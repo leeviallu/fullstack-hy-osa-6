@@ -2,7 +2,12 @@ import { useMutation, useQueryClient } from 'react-query'
 import { createAnecdote } from '../requests'
 
 const AnecdoteForm = () => {
-  const newAnecdoteMutation = useMutation(createAnecdote)
+  const newAnecdoteMutation = useMutation(createAnecdote, {
+    onSuccess: (newAnecdote) => {
+      const anecdotes = queryClient.getQueryData('anecdotes')
+      queryClient.setQueryData('anecdotes', anecdotes.concat(newAnecdote))
+    }
+  })
   const queryClient = useQueryClient()
 
   const onCreate = (event) => {
@@ -15,11 +20,7 @@ const AnecdoteForm = () => {
         id: String((Math.random() * 1000000).toFixed(0)),
         votes: 0,
       }
-      newAnecdoteMutation.mutate(createAnecdote, {
-        onSuccess: () => {
-          queryClient.invalidateQueries('anecdotes')
-        }  
-      })
+      newAnecdoteMutation.mutate(createAnecdote)
     }
 }
 
