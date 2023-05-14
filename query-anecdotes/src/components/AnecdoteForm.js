@@ -24,6 +24,8 @@ const AnecdoteForm = () => {
       }
       dispatch({type: 'NOTIFICATION', payload: `you added '${content}'`})
       newAnecdoteMutation.mutate(createAnecdote)
+    } else {
+      dispatch({type: 'NOTIFICATION', payload: 'too short anecdote, must have length 5 or more'})
     }
 }
 
