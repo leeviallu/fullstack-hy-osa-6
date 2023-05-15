@@ -8,6 +8,7 @@ export const getAnecdotes = async () => {
 }
 
 export const createAnecdote = async newAnecdote => {
+    if (newAnecdote.content.length < 5) throw new Error("TOO_SHORT")
     const result = await axios.post(baseUrl, newAnecdote)
     return result.data
 }
